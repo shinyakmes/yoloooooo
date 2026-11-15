@@ -1,0 +1,32 @@
+{
+  "weights": "F:\\yolo\\runs\\baseline_640\\weights\\best.pt",
+  "imgsz": 640,
+  "conf": 0.25,
+  "iou": 0.5,
+  "map50": 0.8055478687409888,
+  "map50_95": 0.43387114882494743,
+  "precision": 0.7437593814125072,
+  "recall": 0.776002391720552,
+  "per_class_ap50": [
+    0.5670468755820555,
+    0.8696669525279095,
+    0.9109106953549962,
+    0.8516094061788674,
+    0.6995794747177384,
+    0.9344738080843663
+  ],
+  "per_class_names": [
+    "crazing",
+    "inclusion",
+    "patches",
+    "pitted_surface",
+    "rolled-in_scale",
+    "scratches"
+  ],
+  "recall_at_conf": 0.7702275025113154,
+  "box_miss_rate": 0.22977249748868456,
+  "latency_ms_forward": 17.1083550000003,
+  "e2e_seconds_all_test_imgs": 39.65977829999974,
+  "torch": "2.6.0+cu124",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+}

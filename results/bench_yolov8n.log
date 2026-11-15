@@ -1,0 +1,12 @@
+=== latency benchmark ===
+  gpu: NVIDIA GeForce RTX 4060 Laptop GPU
+  model: F:\yolo\runs\baseline_640\weights\best.pt
+  imgsz=640  batch=1   :   16.51 ms/batch =  16.51 ms/img  |   60.6 img/s
+  imgsz=640  batch=16  :   47.33 ms/batch =   2.96 ms/img  |  338.0 img/s
+  imgsz=416  batch=1   :   15.56 ms/batch =  15.56 ms/img  |   64.2 img/s
+  imgsz=416  batch=16  :   18.75 ms/batch =   1.17 ms/img  |  853.1 img/s
+  imgsz=320  batch=1   :   17.10 ms/batch =  17.10 ms/img  |   58.5 img/s
+  imgsz=320  batch=16  :   19.68 ms/batch =   1.23 ms/img  |  813.0 img/s
+  imgsz=192  batch=1   :   16.50 ms/batch =  16.50 ms/img  |   60.6 img/s
+  imgsz=192  batch=16  :   15.74 ms/batch =   0.98 ms/img  | 1016.5 img/s
+  saved -> F:\yolo\runs\eval\bench_yolov8n.json

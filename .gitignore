@@ -1,0 +1,18 @@
+# 数据与训练产物不进版本库（数据集用脚本一键重建）
+datasets/
+runs/
+weights/
+*.pt
+*.onnx
+*.zip
+*.mp4
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 系统垃圾
+.DS_Store
+Thumbs.db

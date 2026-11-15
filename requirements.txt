@@ -1,0 +1,24 @@
+# 环境（Windows / RTX 4060 Laptop，实测可复现）
+#
+# 先装 CUDA 版 torch（必须用官方 index，国内镜像拿到的是 CPU 版）：
+#   pip install torch==2.6.0+cu124 torchvision==0.21.0+cu124 ^
+#       --index-url https://download.pytorch.org/whl/cu124
+#
+# 再装其余依赖：
+#   pip install -r requirements.txt
+#
+# 验证：
+#   python -c "import torch;print(torch.__version__, torch.cuda.is_available())"   # -> 2.6.0+cu124 True
+
+# 实测环境（当前 E:\yolo\venv 里装的就是这套）
+#
+# 注意：baseline_640 / cmp_320 两次训练用的是 ultralytics 8.4.183；
+# 迁移到 E 盘重建 venv 时升到了 8.4.197（8.4.x 小版本，接口一致）。
+# 若要严格复现原训练结果，把下面 pin 回 8.4.183。
+ultralytics==8.4.197
+opencv-python==5.0.0.93
+numpy==2.4.6
+matplotlib==3.11.2
+pyyaml==6.0.3
+
+# torch / torchvision 见上面的说明（不走 PyPI 默认源）

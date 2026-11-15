@@ -1,0 +1,41 @@
+=== EVAL cmp_320 ===
+Ultralytics 8.4.183  Python-3.11.9 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce RTX 4060 Laptop GPU, 8188MiB)
+Model summary (fused): 73 layers, 3,133,922 parameters, 0 gradients, 8.6 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.1±0.0 ms, read: 103.0±71.0 MB/s, size: 14.8 KB)
+[K[34m[1mval: [0mScanning F:\yolo\datasets\neu-det-yolo\labels\test.cache... 175 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 175/175  0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 9% ━─────────── 1/11 64.6s/it 19.4s<10:46[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 18% ━━────────── 2/11 1.1it/s 19.7s<8.4s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 27% ━━━───────── 3/11 1.8it/s 20.0s<4.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 36% ━━━━──────── 4/11 2.4it/s 20.2s<3.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 45% ━━━━━─────── 5/11 3.9it/s 20.4s<1.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 54% ━━━━━━╸───── 6/11 5.0it/s 20.5s<1.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 63% ━━━━━━━╸──── 7/11 5.7it/s 20.6s<0.7s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 72% ━━━━━━━━╸─── 8/11 6.5it/s 20.8s<0.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 81% ━━━━━━━━━╸── 9/11 6.9it/s 20.9s<0.3s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 90% ━━━━━━━━━━╸─ 10/11 7.3it/s 21.0s<0.1s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 11/11 1.9s/it 21.2s
+                   all        175        402      0.703      0.771      0.799       0.45
+Speed: 0.8ms preprocess, 4.3ms inference, 0.0ms loss, 1.9ms postprocess per image
+Results saved to [1mF:\yolo\runs\detect\val-3[0m
+  mAP@0.5      = 0.7988
+  mAP@0.5:0.95 = 0.4501
+  precision    = 0.7029   recall = 0.7712
+    crazing          AP@0.5 = 0.5376
+    inclusion        AP@0.5 = 0.8812
+    patches          AP@0.5 = 0.9254
+    pitted_surface   AP@0.5 = 0.8651
+    rolled-in_scale  AP@0.5 = 0.6888
+    scratches        AP@0.5 = 0.8947
+Ultralytics 8.4.183  Python-3.11.9 torch-2.6.0+cu124 CUDA:0 (NVIDIA GeForce RTX 4060 Laptop GPU, 8188MiB)
+Model summary (fused): 73 layers, 3,133,922 parameters, 0 gradients, 8.6 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.0±0.0 ms, read: 158.4±93.8 MB/s, size: 12.7 KB)
+[K[34m[1mval: [0mScanning F:\yolo\datasets\neu-det-yolo\labels\test.cache... 175 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 175/175  0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 9% ━─────────── 1/11 58.7s/it 17.6s<9:47[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 27% ━━━───────── 3/11 3.9it/s 17.8s<2.1s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 45% ━━━━━─────── 5/11 6.0it/s 17.9s<1.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 63% ━━━━━━━╸──── 7/11 7.6it/s 18.1s<0.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 81% ━━━━━━━━━╸── 9/11 8.4it/s 18.3s<0.2s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 11/11 1.7s/it 18.5s
+                   all        175        402      0.751      0.736      0.685      0.395
+Speed: 0.8ms preprocess, 1.2ms inference, 0.0ms loss, 1.7ms postprocess per image
+  recall @conf=0.25 iou=0.50 = 0.7362  -> box-level miss = 26.38%
+  forward latency = 17.62 ms/image (@320, 100-run mean, batch=1)
+WARNING 
+Inference results will accumulate in RAM unless `stream=True` is passed, which can cause out-of-memory errors for large
+sources or long-running streams and videos. See https://docs.ultralytics.com/modes/predict for help.
+
+Example:
+    results = model(source=..., stream=True)  # generator of Results objects
+    for r in results:
+        boxes = r.boxes  # Boxes object for bbox outputs
+        masks = r.masks  # Masks object for segment masks outputs
+        probs = r.probs  # Class probabilities for classification outputs
+
+  end-to-end total for the source folder = 35.3 s
+  saved -> F:\yolo\runs\eval\eval_cmp_320.json
+=== EVAL DONE ===

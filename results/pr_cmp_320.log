@@ -1,0 +1,24 @@
+=== explicit-threshold evaluation (own matcher) ===
+  images=175  iou=0.50  nms_iou=0.70  imgsz=320  conf_for_predict=0.01
+  GT boxes on test split = 402
+
+  conf     TP    FP    FN   precision  recall   box-miss  img-miss
+  0.05    372   704    30     0.3457   0.9254      7.46%    15.43%
+  0.10    348   367    54     0.4867   0.8657     13.43%    25.14%
+  0.15    324   248    78     0.5664   0.8060     19.40%    35.43%
+  0.20    309   163    93     0.6547   0.7687     23.13%    39.43%
+  0.25    293   122   109     0.7060   0.7289     27.11%    42.29%
+  0.30    281    87   121     0.7636   0.6990     30.10%    45.71%
+  0.40    256    59   146     0.8127   0.6368     36.32%    51.43%
+  0.50    235    31   167     0.8835   0.5846     41.54%    56.57%
+  0.60    203    17   199     0.9227   0.5050     49.50%    63.43%
+
+--- per class @conf=0.25 ---
+  crazing          TP= 22 FP= 16 FN= 41   P=0.5789 R=0.3492  miss= 65.08%
+  inclusion        TP= 75 FP= 34 FN= 19   P=0.6881 R=0.7979  miss= 20.21%
+  patches          TP= 79 FP= 26 FN=  6   P=0.7524 R=0.9294  miss=  7.06%
+  pitted_surface   TP= 33 FP=  8 FN= 12   P=0.8049 R=0.7333  miss= 26.67%
+  rolled-in_scale  TP= 38 FP= 21 FN= 23   P=0.6441 R=0.6230  miss= 37.70%
+  scratches        TP= 46 FP= 17 FN=  8   P=0.7302 R=0.8519  miss= 14.81%
+
+  saved -> F:\yolo\runs\eval\pr_at_conf_cmp_320.json
