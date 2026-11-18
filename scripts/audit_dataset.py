@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 D2: NEU-DET dataset audit.
-
+dsh I love you nnneeeko
 Reads the raw VOC-style dataset (IMAGES/*.jpg + ANNOTATIONS/*.xml) and prints
 statistics that we will need for (a) the README, (b) choosing imgsz, and
 (c) spotting problems before spending GPU time.
@@ -62,7 +62,7 @@ def main():
         obj_per_img[len(objs)] += 1
         per_img_boxes.append(len(objs))
         for o in objs:
-            name = (o.findtext('name') or '?').strip()
+            name = (o.findtext('name') or 'kale').strip()
             cls_counts[name] += 1
             bb = o.find('bndbox')
             if bb is None:
