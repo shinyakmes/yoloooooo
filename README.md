@@ -199,7 +199,42 @@ yolo train model=E:\yolo\weights\yolov8n.pt data=E:\yolo\datasets\neu-det-yolo\d
 > 自己写匹配器之后纠正为：**降阈值确实能换召回，代价是误判暴涨**。
 > 教训：框架给的汇总数字很方便，但它未必在回答你问的问题。详见 [`docs/实验记录.md`](docs/实验记录.md) 第 14 条。
 
-### 4.5 曲线和混淆矩阵
+### 4.6 ONNX 导出与部署实测
+
+`best.pt` → ONNX（3 秒，**12.2 MB**，opset 17，元数据完整：names / imgsz / stride / end2end=False）。
+
+**先验"导出的还是同一个模型"**（同一张图，PT 与 ONNX 逐框对比）：
+
+| 检查 | 结果 |
+|---|---|
+| 检测框数 | 96 vs 96（完全一致） |
+| 框位置 IoU（逐个匹配） | 中位 **0.9997**，最小 0.9985 |
+| 置信度最大差 | **0.00024** |
+
+**再测延迟**（batch=1，纯前向）：
+
+| 后端 | 设备 | ms/图 |
+|---|---|---|
+| PyTorch fp32 | GPU | **16.5** |
+| PyTorch fp32 | CPU | 67.5 |
+| ONNX Runtime（**默认线程**） | CPU | **238.7** ⚠️ |
+| ONNX Runtime（显式 8 线程） | CPU | **48.0** |
+
+**两个反直觉结论：**
+
+1. **ONNX 在这台机器上默认反而慢 3.5 倍**（238.7 vs 67.5 ms）。原因不是 ONNX 差，而是
+   ORT 默认按逻辑核心数开线程 —— 这台机器有 **20 个逻辑处理器**，对这个小模型（8.6 GFLOPs）
+   属于**过度并行**，线程调度开销压过了计算收益。显式设 `intra_op_num_threads=8` 后降到 **48 ms**，
+   比 PyTorch CPU 快 1.4 倍。
+2. **ONNX 的价值不是"在本机提速"，而是跨平台部署**：脱离 PyTorch/Python 运行（C++/C#/工控机），
+   并能接 TensorRT / OpenVINO。真要压单帧延迟，方向是 GPU 上的 TensorRT，不是 CPU 上的 ORT。
+
+> ⚠️ **一处没查清的地方（不编原因）**：`yolo val` 对 ONNX 报 mAP@0.5 = **0.791**，
+> PyTorch 报 **0.806**，差 0.015。已排除 simplify / opset(12、17) / device / batch 的影响，
+> 且单图 predict 逐框一致 —— 说明**模型本身等价**，差异出在验证流程。
+> 记为未解决，可用 `scripts/compare_predict_pt_onnx.py`、`scripts/bench_onnx_threads.py` 复现。
+
+### 4.7 曲线和混淆矩阵
 
 - 训练曲线（loss / mAP）：[`results/baseline_640_results.png`](results/baseline_640_results.png)
 - 归一化混淆矩阵：[`results/baseline_640_confusion_matrix.png`](results/baseline_640_confusion_matrix.png)
