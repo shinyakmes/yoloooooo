@@ -16,13 +16,17 @@ Usage:
 import argparse
 import json
 import os
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import time
 
 import torch
 
 from ultralytics import YOLO
 
-OUT = r'E:\yolo\runs\eval'
+OUT = os.path.join(BASE, 'runs', 'eval')
 
 
 def bench(net, imgsz, batch, iters=50, warmup=10):

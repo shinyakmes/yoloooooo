@@ -25,12 +25,16 @@ import glob
 import json
 import os
 
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import numpy as np
 from ultralytics import YOLO
 
-LABELS = r'E:\yolo\datasets\neu-det-yolo\labels\test'
-IMAGES = r'E:\yolo\datasets\neu-det-yolo\images\test'
-OUT = r'E:\yolo\runs\eval'
+LABELS = os.path.join(BASE, 'datasets', 'neu-det-yolo', 'labels', 'test')
+IMAGES = os.path.join(BASE, 'datasets', 'neu-det-yolo', 'images', 'test')
+OUT = os.path.join(BASE, 'runs', 'eval')
 CLASSES = ['crazing', 'inclusion', 'patches', 'pitted_surface', 'rolled-in_scale', 'scratches']
 
 

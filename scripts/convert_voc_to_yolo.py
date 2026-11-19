@@ -17,16 +17,20 @@ Layout produced:
 label line format: <class_id> <cx> <cy> <w> <h>   (all normalized to 0..1)
 """
 import os
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import random
 import shutil
 import time
 import collections
 import xml.etree.ElementTree as ET
 
-SRC = r'E:\yolo\datasets\NEU-DET'
+SRC = os.path.join(BASE, 'datasets', 'NEU-DET')
 IMG_DIR = os.path.join(SRC, 'IMAGES')
 ANN_DIR = os.path.join(SRC, 'ANNOTATIONS')
-DST = r'E:\yolo\datasets\neu-det-yolo'
+DST = os.path.join(BASE, 'datasets', 'neu-det-yolo')
 
 CLASSES = ['crazing', 'inclusion', 'patches',
            'pitted_surface', 'rolled-in_scale', 'scratches']

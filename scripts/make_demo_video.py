@@ -10,15 +10,19 @@ Usage:
 import argparse
 import os
 
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import cv2
 
-SRC = r'E:\yolo\datasets\neu-det-yolo\images\test'
+SRC = os.path.join(BASE, 'datasets', 'neu-det-yolo', 'images', 'test')
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--src', default=SRC)
-    ap.add_argument('--out', default=r'E:\yolo\demo\line_sim.mp4')
+    ap.add_argument('--out', default=os.path.join(BASE, 'demo', 'line_sim.mp4'))
     ap.add_argument('--fps', type=float, default=6.0)
     ap.add_argument('--side', type=int, default=500)
     args = ap.parse_args()

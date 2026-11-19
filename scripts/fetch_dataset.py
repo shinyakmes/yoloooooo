@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """D2 step 1: fetch NEU-DET (raw VOC: IMAGES + ANNOTATIONS) from GitHub to E:\yolo\datasets."""
 import os
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import ssl
 import sys
 import time
@@ -9,7 +13,7 @@ import zipfile
 
 CTX = ssl.create_default_context()
 UA = {'User-Agent': 'Mozilla/5.0'}
-ROOT = r'E:\yolo\datasets'
+ROOT = os.path.join(BASE, 'datasets')
 ZIP = os.path.join(ROOT, 'neudet_github.zip')
 URL = ('https://codeload.github.com/siddhartamukherjee/'
        'NEU-DET-Steel-Surface-Defect-Detection/zip/refs/heads/master')

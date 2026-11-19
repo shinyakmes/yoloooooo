@@ -15,14 +15,18 @@ Usage:
 import argparse
 import json
 import os
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import time
 
 import numpy as np
 import torch
 from ultralytics import YOLO
 
-DATA = r'E:\yolo\datasets\neu-det-yolo\data.yaml'
-OUT_DIR = r'E:\yolo\runs\eval'
+DATA = os.path.join(BASE, 'datasets', 'neu-det-yolo', 'data.yaml')
+OUT_DIR = os.path.join(BASE, 'runs', 'eval')
 CLASSES = ['crazing', 'inclusion', 'patches', 'pitted_surface', 'rolled-in_scale', 'scratches']
 
 

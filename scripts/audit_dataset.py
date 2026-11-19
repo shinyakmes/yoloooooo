@@ -10,14 +10,18 @@ Input : F:\\yolo\\datasets\\NEU-DET
 Output: console + F:\\yolo\\datasets\\audit_report.txt
 """
 import os
+
+# 数据根目录：可用环境变量 YOLO_ROOT 覆盖
+BASE = os.environ.get('YOLO_ROOT', r'E:\yolo')
+
 import time
 import collections
 import xml.etree.ElementTree as ET
 
-ROOT = r'E:\yolo\datasets\NEU-DET'
+ROOT = os.path.join(BASE, 'datasets', 'NEU-DET')
 IMG_DIR = os.path.join(ROOT, 'IMAGES')
 ANN_DIR = os.path.join(ROOT, 'ANNOTATIONS')
-REPORT = r'E:\yolo\datasets\audit_report.txt'
+REPORT = os.path.join(BASE, 'datasets', 'audit_report.txt')
 
 LINES = []
 
