@@ -7,6 +7,7 @@ param(
     [int]$Batch = 16,
     [int]$Workers = 4,
     [bool]$Cache = $true,
+    [string]$Data = '',
     [string[]]$Extra = @()
 )
 
@@ -15,8 +16,10 @@ param(
 #   .\scripts\train.ps1 -Name exp_v8s -Model yolov8s.pt -Batch 8
 #   .\scripts\train.ps1 -Name seed1_640 -Seed 1 -Workers 2 -Cache $false
 #   .\scripts\train.ps1 -Name exp_mosaic0 -Extra mosaic=0
+#   .\scripts\train.ps1 -Name exp_clahe_640 -Data E:\yolo\datasets\neu-det-yolo-clahe\data.yaml -Workers 2 -Cache $false
 #
 # Data root: override with env var YOLO_ROOT (default E:\yolo)
+# -Data: 换数据集（例如 CLAHE 版），不传则用原始 neu-det-yolo
 
 $ErrorActionPreference = 'Stop'
 
@@ -25,7 +28,7 @@ if ($env:YOLO_ROOT) { $BASE = $env:YOLO_ROOT }
 
 $yolo  = Join-Path $BASE 'venv\Scripts\yolo.exe'
 $model = Join-Path $BASE ('weights\' + $Model)
-$data  = Join-Path $BASE 'datasets\neu-det-yolo\data.yaml'
+if ($Data) { $data = $Data } else { $data = Join-Path $BASE 'datasets\neu-det-yolo\data.yaml' }
 $proj  = Join-Path $BASE 'runs'
 
 if (-not (Test-Path $yolo))  { throw "yolo.exe not found: $yolo" }

@@ -81,9 +81,11 @@ def main():
     for k in range(K):
         y = os.path.join(DST, 'data_f%d.yaml' % k)
         with open(y, 'w', encoding='utf-8') as f:
-            f.write('# kfold f%d（自动生成，test 不参与）\n' % k)
+            f.write('# kfold f%d（自动生成，test 不参与训练/选模型）\n' % k)
             f.write('train: f%d/images/train\n' % k)
             f.write('val: f%d/images/val\n' % k)
+            # test 只是给 eval_kfold.py 用的评测入口，训练与选模型都不会碰它
+            f.write('test: ../neu-det-yolo/images/test\n')
             f.write('\nnames:\n')
             for i, c in enumerate(CLASSES):
                 f.write('  %d: %s\n' % (i, c))

@@ -66,7 +66,10 @@ def main():
     ap.add_argument('--iou', type=float, default=0.5)
     ap.add_argument('--tag', default='')
     ap.add_argument('--runs', type=int, default=100)
+    ap.add_argument('--data', default=DATA,
+                    help='data.yaml；换数据集（如 CLAHE 版）时传它，评测才会用对应的测试图')
     args = ap.parse_args()
+    data_yaml = args.data
 
     os.makedirs(OUT_DIR, exist_ok=True)
     tag = args.tag or ('%s_%d' % (os.path.basename(os.path.dirname(os.path.dirname(args.weights))), args.imgsz))
@@ -76,7 +79,7 @@ def main():
     model = YOLO(args.weights)
 
     # --- 1) metrics on test split -------------------------------------------
-    m = model.val(data=DATA, split='test', imgsz=args.imgsz, conf=0.001, iou=0.6,
+    m = model.val(data=data_yaml, split='test', imgsz=args.imgsz, conf=0.001, iou=0.6,
                   plots=True, verbose=False)
     out['map50'] = float(m.box.map50)
     out['map50_95'] = float(m.box.map)
@@ -103,10 +106,14 @@ def main():
     print('  forward latency = %.2f ms/image (@%d, %d-run mean, batch=1)' % (lat, args.imgsz, args.runs))
 
     # end-to-end incl. preprocess/postprocess, for comparison
+    src_dir = os.path.join(os.path.dirname(os.path.abspath(data_yaml)), 'images', 'test')
+    if not os.path.isdir(src_dir):
+        src_dir = os.path.join(BASE, 'datasets', 'NEU-DET', 'IMAGES')
     t0 = time.perf_counter()
-    _ = model.predict(source=r'E:\yolo\datasets\NEU-DET\IMAGES', imgsz=args.imgsz,
+    _ = model.predict(source=src_dir, imgsz=args.imgsz,
                       conf=args.conf, verbose=False, stream=False)
     e2e = (time.perf_counter() - t0)
+    out['e2e_source'] = src_dir
     out['e2e_seconds_all_test_imgs'] = e2e
     print('  end-to-end total for the source folder = %.1f s' % e2e)
 
