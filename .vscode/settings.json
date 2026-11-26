@@ -1,0 +1,12 @@
+{
+  // 让任何人 clone 下来打开这个仓库，解释器、编码、import 路径就是对的。
+  // 环境怎么重建见 scripts/setup/setup_E.ps1 和 requirements.txt。
+  "python.defaultInterpreterPath": "E:\\yolo\\venv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": ["scripts"],
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "[python]": {
+    "editor.formatOnSave": false
+  }
+}

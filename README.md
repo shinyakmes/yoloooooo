@@ -98,17 +98,18 @@ NEU-DET 这类缺陷与背景灰度接近、边界模糊的图，瓶颈根本不
 
 ## 3. 训练
 
-| 项 | baseline_640 | cmp_320 |
-|---|---|---|
-| 模型 | yolov8n.pt（COCO 预训练） 先做一个能看基础图的模型
-| imgsz | 640 | 320 | 我需要喂给精神病网络的东西
-| epochs / patience | 50 / 30 | 50 / 30 | ；训练集过五十遍，但是连续30没提升，就破崩了。
-| batch | 16 | 16 |  16一组这一块
-| optimizer | auto → AdamW (lr0=0.01) | 同 |  用a一串方法，然后呢每次0.01
-| 增强 | 默认（mosaic=1.0, fliplr=0.5, HSV 扰动） 不知道啊ai给的自己过了哈哈（m一串是超级拼装四合一，f一串是概率水平翻转，然后hsv是亮度扰动）
-| seed / deterministic | 0 / True  结果可复现
-| cache | True（1416 张小图，全量驻留内存） 全塞进内存
-| **训练耗时** | **14.0 min**（16.8 s/epoch） | 11.4 min（均13.7 s/epoch） |
+| 项 | baseline_640 | cmp_320 | 我的备注 |
+|---|---|---|---|
+| 模型 | yolov8n.pt（COCO 预训练） | 同 | 先做一个能看基础结果的模型，不追求精度 |
+| imgsz | 640 | 320 | 喂给神经网络的边长。原图只有 200×200，等于被放大 3.2 倍 |
+| epochs / patience | 50 / 30 | 50 / 30 | 训练集过 50 遍；连续 30 轮没提升就早停 |
+| batch | 16 | 16 | 一次喂 16 张 |
+| optimizer | auto → AdamW (lr0=0.01) | 同 | auto 让框架自己选，实际选到 AdamW，初始学习率 0.01 |
+| 增强 | 默认（mosaic=1.0, fliplr=0.5, HSV 扰动） | 同 | 默认值不是我调的：mosaic 四张图拼一张、fliplr 按 0.5 概率水平翻转、HSV 是亮度/饱和度/色调扰动 |
+| seed / deterministic | 0 / True | 同 | 固定种子 + 确定性，结果可复现 |
+| cache | True（1416 张小图，全量驻留内存） | 同 | 全塞进内存，省得每轮重新读盘 |
+| workers | 4 | 4 | 之后因为内存不够降到 2（见下方警告） |
+| **训练耗时** | **14.0 min**（16.8 s/epoch） | 11.4 min（均 13.7 s/epoch） | 320 只省了 2.6 分钟 |
 
 ```powershell
 # 统一走包装脚本（Windows PowerShell 5.1 不认 cmd 的 ^ 续行符，别手打长命令）
@@ -310,6 +311,7 @@ repo/
 ├─ README.md
 ├─ LICENSE
 ├─ requirements.txt
+├─ .vscode/settings.json      # 默认解释器指向 venv + UTF-8，clone 下来开箱即用
 ├─ scripts/
 │  ├─ fetch_dataset.py        # 下载原始 VOC 数据集（Python 通道，断点续传）
 │  ├─ fetch_file.py           # 通用断点续传下载（权重等）
