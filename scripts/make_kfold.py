@@ -41,8 +41,10 @@ def main():
         by_cls[s.rsplit('_', 1)[0]].append(s)
     rng = random.Random(SEED)
     fold_of = {}
-    for cls, lst in by_cls.items():
-        lst = sorted(lst)
+    # 桶的顺序也要钉死：os.listdir 不保证顺序，桶的处理顺序一变，
+    # rng 这条随机流被消费的顺序就变 -> 同种子在新机器上会切出不同的折。
+    for cls in sorted(by_cls):
+        lst = sorted(by_cls[cls])
         rng.shuffle(lst)
         for i, s in enumerate(lst):
             fold_of[s] = i % K
